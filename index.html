@@ -511,8 +511,8 @@ function openSurprise(){
     const popup = document.getElementById("birthdayPopup");
 
     popup.classList.add("show");
-
 }
+
 
 /* Open website + start music */
 function openMessage(){
@@ -536,107 +536,121 @@ function openMessage(){
 }
 
 
-/* Scratch reveal */
+/* Mobile + mouse scratch reveal */
+
 document.querySelectorAll(".scratch-card").forEach(function(card){
 
     const canvas = card.querySelector("canvas");
     const ctx = canvas.getContext("2d");
 
+    let isScratching = false;
+
     function setupCanvas(){
 
-        const rect = card.getBoundingClientRect();
+        const width = card.clientWidth;
+        const height = card.clientHeight;
 
-        const dpr = window.devicePixelRatio || 1;
+        const ratio = window.devicePixelRatio || 1;
 
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
 
-        canvas.style.width = rect.width + "px";
-        canvas.style.height = rect.height + "px";
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
 
-        ctx.setTransform(dpr,0,0,dpr,0,0);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-        /* Scratch surface */
+        /* Maroon scratch covering */
         ctx.globalCompositeOperation = "source-over";
 
         ctx.fillStyle = "#43131e";
-        ctx.fillRect(0,0,rect.width,rect.height);
+        ctx.fillRect(0, 0, width, height);
 
-        /* Text */
+        /* Scratch text */
         ctx.fillStyle = "#efd9dd";
         ctx.font = "18px Georgia";
         ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
         ctx.fillText(
             "Scratch gently ♡",
-            rect.width / 2,
-            rect.height / 2
+            width / 2,
+            height / 2
         );
-
     }
+
 
     setupCanvas();
 
-    window.addEventListener("resize", setupCanvas);
-
-    let scratching = false;
 
     function scratch(e){
 
-        if(!scratching) return;
+        if(!isScratching) return;
 
         const rect = canvas.getBoundingClientRect();
 
-        let x;
-        let y;
-
-        if(e.touches){
-
-            x = e.touches[0].clientX - rect.left;
-            y = e.touches[0].clientY - rect.top;
-
-        }else{
-
-            x = e.clientX - rect.left;
-            y = e.clientY - rect.top;
-
-        }
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
         ctx.globalCompositeOperation = "destination-out";
 
         ctx.beginPath();
-        ctx.arc(x,y,28,0,Math.PI*2);
+        ctx.arc(x, y, 30, 0, Math.PI * 2);
         ctx.fill();
 
     }
 
-    canvas.addEventListener("mousedown",function(){
-        scratching = true;
+
+    canvas.addEventListener("pointerdown", function(e){
+
+        e.preventDefault();
+
+        isScratching = true;
+
+        canvas.setPointerCapture(e.pointerId);
+
+        scratch(e);
+
     });
 
-    canvas.addEventListener("mousemove",scratch);
 
-    window.addEventListener("mouseup",function(){
-        scratching = false;
+    canvas.addEventListener("pointermove", function(e){
+
+        if(!isScratching) return;
+
+        e.preventDefault();
+
+        scratch(e);
+
     });
 
-    canvas.addEventListener("touchstart",function(e){
-        e.preventDefault();
-        scratching = true;
-        scratch(e);
-    },{passive:false});
 
-    canvas.addEventListener("touchmove",function(e){
-        e.preventDefault();
-        scratch(e);
-    },{passive:false});
+    canvas.addEventListener("pointerup", function(e){
 
-    canvas.addEventListener("touchend",function(){
-        scratching = false;
+        isScratching = false;
+
+        try{
+            canvas.releasePointerCapture(e.pointerId);
+        }catch(error){}
+
+    });
+
+
+    canvas.addEventListener("pointercancel", function(){
+
+        isScratching = false;
+
+    });
+
+
+    canvas.addEventListener("pointerleave", function(){
+
+        isScratching = false;
+
     });
 
 });
-
 </script>
-
+    
 </body>
   </html>
