@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For Aalyan ♡</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family: Georgia, "Times New Roman", serif;
+    background:
+        radial-gradient(circle at 50% 20%, #40121d 0%, #18080d 38%, #050305 100%);
+    color:#f8e9eb;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* Floating hearts */
+.hearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:1;
+}
+
+.heart{
+    position:absolute;
+    bottom:-40px;
+    color:#8f2638;
+    font-size:18px;
+    opacity:.45;
+    animation:floatUp linear infinite;
+}
+
+.heart:nth-child(1){left:5%;animation-duration:11s;animation-delay:1s;}
+.heart:nth-child(2){left:14%;animation-duration:14s;animation-delay:3s;}
+.heart:nth-child(3){left:25%;animation-duration:12s;animation-delay:5s;}
+.heart:nth-child(4){left:36%;animation-duration:16s;animation-delay:2s;}
+.heart:nth-child(5){left:48%;animation-duration:13s;animation-delay:6s;}
+.heart:nth-child(6){left:59%;animation-duration:15s;animation-delay:4s;}
+.heart:nth-child(7){left:70%;animation-duration:12s;animation-delay:1s;}
+.heart:nth-child(8){left:81%;animation-duration:17s;animation-delay:5s;}
+.heart:nth-child(9){left:91%;animation-duration:13s;animation-delay:7s;}
+.heart:nth-child(10){left:43%;animation-duration:18s;animation-delay:8s;}
+.heart:nth-child(11){left:9%;animation-duration:15s;animation-delay:9s;}
+.heart:nth-child(12){left:76%;animation-duration:14s;animation-delay:10s;}
+
+@keyframes floatUp{
+    0%{
+        transform:translateY(0) scale(.7);
+        opacity:0;
+    }
+    15%{
+        opacity:.45;
+    }
+    85%{
+        opacity:.3;
+    }
+    100%{
+        transform:translateY(-115vh) scale(1.2);
+        opacity:0;
+    }
+}
+
+/* Opening */
+#opening{
+    position:relative;
+    z-index:5;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
+}
+
+.opening-content{
+    max-width:700px;
+    animation:fadeIn 1.8s ease;
+}
+
+.small-title{
+    color:#c98491;
+    font-size:14px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:20px;
+}
+
+.main-title{
+    font-size:clamp(42px,10vw,80px);
+    line-height:1.05;
+    font-weight:normal;
+    color:#f7e6e9;
+    text-shadow:0 0 30px rgba(150,30,55,.35);
+}
+
+.main-title span{
+    display:block;
+    font-size:.45em;
+    margin-top:18px;
+    letter-spacing:5px;
+    color:#c98691;
+}
+
+.open-button{
+    margin-top:38px;
+    padding:15px 30px;
+    border:1px solid #873044;
+    border-radius:50px;
+    background:#260b12;
+    color:#f8e9eb;
+    font-family:inherit;
+    font-size:15px;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 0 25px rgba(120,25,45,.25);
+}
+
+.open-button:hover{
+    background:#481321;
+    transform:translateY(-2px);
+}
+
+/* Popup */
+.popup{
+    position:fixed;
+    inset:0;
+    z-index:20;
+    background:rgba(3,2,3,.78);
+    backdrop-filter:blur(8px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    opacity:0;
+    visibility:hidden;
+    transition:.4s;
+}
+
+.popup.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.popup-card{
+    width:min(430px,100%);
+    padding:45px 30px;
+    text-align:center;
+    border:1px solid #743040;
+    border-radius:25px;
+    background:linear-gradient(145deg,#250a12,#0d0609);
+    box-shadow:0 0 60px rgba(115,22,43,.35);
+    transform:translateY(20px) scale(.96);
+    transition:.4s;
+}
+
+.popup.show .popup-card{
+    transform:translateY(0) scale(1);
+}
+
+.popup-card h2{
+    font-size:38px;
+    font-weight:normal;
+    margin-bottom:15px;
+}
+
+.popup-card p{
+    color:#cdaeb3;
+    line-height:1.8;
+    margin-bottom:28px;
+}
+
+.popup-button{
+    border:1px solid #873044;
+    background:#35101a;
+    color:#fff0f2;
+    border-radius:40px;
+    padding:13px 25px;
+    font-family:inherit;
+    cursor:pointer;
+}
+
+/* Main website */
+#website{
+    position:relative;
+    z-index:3;
+    display:none;
+}
+
+.section{
+    min-height:100vh;
+    padding:90px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.section-label{
+    color:#a95767;
+    letter-spacing:4px;
+    font-size:12px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+}
+
+.section-title{
+    font-size:clamp(32px,8vw,55px);
+    font-weight:normal;
+    text-align:center;
+    margin-bottom:35px;
+}
+
+/* Message card */
+.message-card{
+    width:min(720px,100%);
+    background:linear-gradient(145deg,rgba(48,12,22,.94),rgba(12,5,9,.96));
+    border:1px solid #6c2b3a;
+    border-radius:25px;
+    padding:35px 27px;
+    box-shadow:0 20px 70px rgba(0,0,0,.4);
+    line-height:1.9;
+    color:#eadcdf;
+}
+
+.message-card .greeting{
+    color:#f5dce1;
+    font-size:21px;
+    margin-bottom:20px;
+}
+
+.message-card p{
+    margin-bottom:20px;
+}
+
+.symbol{
+    text-align:center;
+    color:#b86b79;
+    margin:8px 0 20px;
+    font-size:18px;
+}
+
+/* Scratch photos */
+.photo-section{
+    min-height:auto;
+    padding:40px 20px 110px;
+}
+
+.scratch-card{
+    width:min(500px,100%);
+    height:330px;
+    position:relative;
+    margin:25px auto 60px;
+    overflow:hidden;
+    border-radius:24px;
+    border:1px solid #6c2b3a;
+    background:#100509;
+    box-shadow:0 15px 55px rgba(0,0,0,.45);
+}
+
+.scratch-card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.scratch-card canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    touch-action:none;
+    cursor:crosshair;
+}
+
+.scratch-hint{
+    position:absolute;
+    z-index:5;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+    color:#f0d9dd;
+    font-size:18px;
+    letter-spacing:1px;
+    text-shadow:0 2px 10px #000;
+}
+
+.final-section{
+    min-height:75vh;
+    text-align:center;
+}
+
+.final-symbol{
+    font-size:28px;
+    color:#ad5b6d;
+    margin-bottom:25px;
+}
+
+.final-section h2{
+    font-size:clamp(30px,7vw,50px);
+    font-weight:normal;
+    margin-bottom:20px;
+}
+
+.final-section p{
+    color:#bfa7ab;
+    font-style:italic;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:600px){
+    .message-card{
+        padding:27px 20px;
+        font-size:15px;
+    }
+
+    .scratch-card{
+        height:270px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating hearts -->
+<div class="hearts">
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+    <div class="heart">♡</div>
+</div>
+
+<!-- Background music -->
+<audio id="bgMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Opening -->
+<section id="opening">
+    <div class="opening-content">
+
+        <div class="small-title">A little surprise for you</div>
+
+        <h1 class="main-title">
+            Aalyan
+            <span>My Love ♡</span>
+        </h1>
+
+        <button class="open-button" onclick="openSurprise()">
+            Open Your Surprise ♡
+        </button>
+
+    </div>
+</section>
+
+<!-- Birthday popup -->
+<div class="popup" id="birthdayPopup">
+
+    <div class="popup-card">
+
+        <h2>Happy Birthday, Aalyan ♡</h2>
+
+        <p>
+            A little surprise, made just for you.
+        </p>
+
+        <button class="popup-button" onclick="openMessage()">
+            Open My Heart ♡
+        </button>
+
+    </div>
+
+</div>
+
+<!-- Main website -->
+<main id="website">
+
+    <!-- Message -->
+    <section class="section">
+
+        <div class="section-label">For you</div>
+
+        <h2 class="section-title">
+            A little message
+        </h2>
+
+        <div class="message-card">
+
+            <div class="greeting">
+                Meri Jaan.. ♡
+            </div>
+
+            <p>
+                This year feels a little different because I’m here to apologize
+                for all the times I hurt you, argued with you, demanded unnecessary
+                attention, and failed to understand you.
+            </p>
+
+            <p>
+                I’m sorry for being possessive, immature, and not the person you
+                wished I could be. ❀
+            </p>
+
+            <div class="symbol">⋆𐙚₊˚</div>
+
+            <p>
+                I once thought the best gift I could give you was peace, and maybe
+                that means stepping away from your life. ♡
+            </p>
+
+            <div class="symbol">☆</div>
+
+            <p>
+                Regardless, I pray that Allah blesses you with endless happiness,
+                success, and the fulfillment of every dream in your heart.
+                May He take you to the place you’ve always wished to reach. ✿
+            </p>
+
+            <p>
+                Ameen. ❁
+            </p>
+
+            <p>
+                Always stay happy, my love.. ♡
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- Scratch photos -->
+    <section class="photo-section">
+
+        <div class="scratch-card">
+            <img src="photo1.jpg" alt="A special photo">
+
+            <div class="scratch-hint">
+                Scratch gently ♡
+            </div>
+
+            <canvas></canvas>
+        </div>
+
+        <div class="scratch-card">
+            <img src="photo2.jpg" alt="A special photo">
+
+            <div class="scratch-hint">
+                Scratch gently ♡
+            </div>
+
+            <canvas></canvas>
+        </div>
+
+    </section>
+
+    <!-- Ending -->
+    <section class="section final-section">
+
+        <div class="final-symbol">
+            ⋆𐙚₊˚
+        </div>
+
+        <h2>
+            Always stay happy, my love ♡
+        </h2>
+
+        <p>
+            With all my heart.
+        </p>
+
+    </section>
+
+</main>
+
+<script>
+
+/* Open first popup */
+function openSurprise(){
+
+    const popup = document.getElementById("birthdayPopup");
+
+    popup.classList.add("show");
+
+}
+
+/* Open website + start music */
+function openMessage(){
+
+    const music = document.getElementById("bgMusic");
+
+    music.play().catch(function(error){
+        console.log("Music could not start:", error);
+    });
+
+    document.getElementById("birthdayPopup").classList.remove("show");
+
+    document.getElementById("opening").style.display = "none";
+
+    document.getElementById("website").style.display = "block";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* Scratch reveal */
+document.querySelectorAll(".scratch-card").forEach(function(card){
+
+    const canvas = card.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+
+    function setupCanvas(){
+
+        const rect = card.getBoundingClientRect();
+
+        const dpr = window.devicePixelRatio || 1;
+
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+
+        canvas.style.width = rect.width + "px";
+        canvas.style.height = rect.height + "px";
+
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+
+        /* Scratch surface */
+        ctx.globalCompositeOperation = "source-over";
+
+        ctx.fillStyle = "#43131e";
+        ctx.fillRect(0,0,rect.width,rect.height);
+
+        /* Text */
+        ctx.fillStyle = "#efd9dd";
+        ctx.font = "18px Georgia";
+        ctx.textAlign = "center";
+        ctx.fillText(
+            "Scratch gently ♡",
+            rect.width / 2,
+            rect.height / 2
+        );
+
+    }
+
+    setupCanvas();
+
+    window.addEventListener("resize", setupCanvas);
+
+    let scratching = false;
+
+    function scratch(e){
+
+        if(!scratching) return;
+
+        const rect = canvas.getBoundingClientRect();
+
+        let x;
+        let y;
+
+        if(e.touches){
+
+            x = e.touches[0].clientX - rect.left;
+            y = e.touches[0].clientY - rect.top;
+
+        }else{
+
+            x = e.clientX - rect.left;
+            y = e.clientY - rect.top;
+
+        }
+
+        ctx.globalCompositeOperation = "destination-out";
+
+        ctx.beginPath();
+        ctx.arc(x,y,28,0,Math.PI*2);
+        ctx.fill();
+
+    }
+
+    canvas.addEventListener("mousedown",function(){
+        scratching = true;
+    });
+
+    canvas.addEventListener("mousemove",scratch);
+
+    window.addEventListener("mouseup",function(){
+        scratching = false;
+    });
+
+    canvas.addEventListener("touchstart",function(e){
+        e.preventDefault();
+        scratching = true;
+        scratch(e);
+    },{passive:false});
+
+    canvas.addEventListener("touchmove",function(e){
+        e.preventDefault();
+        scratch(e);
+    },{passive:false});
+
+    canvas.addEventListener("touchend",function(){
+        scratching = false;
+    });
+
+});
+
+</script>
+
+</body>
+  </html>
