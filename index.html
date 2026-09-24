@@ -262,7 +262,6 @@ body{
 
 .scratch-card{
     width:min(500px,100%);
-    height:330px;
     position:relative;
     margin:25px auto 60px;
     overflow:hidden;
@@ -273,13 +272,11 @@ body{
 }
 
 .scratch-card img{
-    position:absolute;
-    inset:0;
+    display:block;
     width:100%;
-    height:100%;
-    object-fit:contain;
-}
-    
+    height:auto;
+    position:relative;
+    z-index:1;
 }
 
 .scratch-card canvas{
@@ -287,8 +284,24 @@ body{
     inset:0;
     width:100%;
     height:100%;
+    z-index:2;
     touch-action:none;
     cursor:crosshair;
+}
+
+.scratch-hint{
+    position:absolute;
+    z-index:3;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+    color:#f0d9dd;
+    font-size:18px;
+    letter-spacing:1px;
+    text-shadow:0 2px 10px #000;
+}
 }
 
 .scratch-hint{
@@ -582,7 +595,13 @@ document.querySelectorAll(".scratch-card").forEach(function(card){
     }
 
 
+    const photo = card.querySelector("img");
+
+if (photo.complete) {
     setupCanvas();
+} else {
+    photo.addEventListener("load", setupCanvas);
+}
 
 
     function scratch(e){
